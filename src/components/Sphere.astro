@@ -1,0 +1,11 @@
+<canvas class="block size-50" id="sphere-canvas"></canvas>
+
+<script>
+    import { createSphereScene } from '../lib/sphere.js';
+    window.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('sphere-canvas');
+        if (canvas) {
+            createSphereScene(canvas);
+        }
+    });
+</script>
