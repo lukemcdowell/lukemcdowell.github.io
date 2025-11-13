@@ -2,6 +2,14 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export function createSphereScene(canvas: HTMLElement) {
+  // inner solid sphere
+  const innerRadius = 0.6
+
+  // outer wireframe
+  const radius = 1;
+  const widthSegments = 16;
+  const heightSegments = 12;
+
   // scene
   const scene = new THREE.Scene();
   scene.background = new THREE.Color(0xffffff);
@@ -28,9 +36,6 @@ export function createSphereScene(canvas: HTMLElement) {
   dir.position.set(5, 10, 7);
   scene.add(dir);
 
-  // inner solid sphere
-  const innerRadius = 0.7
-
   const innerSphereGeometry = new THREE.SphereGeometry(innerRadius, 32, 16);
   const innerMaterial = new THREE.MeshStandardMaterial({
     color: 0xbef264,
@@ -39,11 +44,6 @@ export function createSphereScene(canvas: HTMLElement) {
   });
   const innerSphere = new THREE.Mesh(innerSphereGeometry, innerMaterial);
   scene.add(innerSphere);
-
-  // outer wireframe
-  const radius = 1;
-  const widthSegments = 16;
-  const heightSegments = 12;
 
   const sphereGeometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
   const wireMaterial = new THREE.MeshBasicMaterial({

@@ -1,8 +1,4 @@
 ---
-const links = [
-	{ name: "Projects", href: "#" },
-	{ name: "CV", href: "#" },
-];
 ---
 
 <!doctype html>
@@ -15,27 +11,7 @@ const links = [
 		<title>Luke McDowell</title>
 	</head>
 	<body>
-		<header class="max-w-4xl mx-auto bg-white p-6">
-			<div class="flex items-center justify-between">
-				<a href="#" class="text-xl font-bold">Luke McDowell</a>
-
-				<nav class="space-x-6 font-mono text-lg">
-					{links.map((link) => (
-						<a
-							href={link.href}
-							class="hover:text-lime-600 transition-colors"
-						>
-							{link.name}
-						</a>
-					))}
-				</nav>
-			</div>
-
-			<div class="mt-3 flex justify-center">
-				<div class="w-full h-2 rounded-full border-2 border-lime-600"></div>
-			</div>
-		</header>
-		<main class="max-w-4xl mx-auto p-6">
+		<main class="max-w-xl mx-auto p-6">
 			<slot />
 		</main>
 	</body>
