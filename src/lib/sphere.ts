@@ -12,7 +12,7 @@ export function createSphereScene(canvas: HTMLElement) {
 
   // scene
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xffffff);
+  scene.background = new THREE.Color(0xffffed);
 
   // camera
   const aspectRatio = canvas.clientWidth / canvas.clientHeight;
