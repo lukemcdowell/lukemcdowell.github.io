@@ -21,6 +21,9 @@ jobs:
       - name: Checkout your repository using git
         uses: actions/checkout@v5
       - name: Install, build, and upload your site
+        env:
+          PUBLIC_API_URL: ${{ secrets.PUBLIC_API_URL }}
+          PUBLIC_API_KEY: ${{ secrets.PUBLIC_API_KEY }}
         uses: withastro/action@v5
           # with:
           # path: . # The root location of your Astro project inside the repository. (optional)
