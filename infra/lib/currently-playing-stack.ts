@@ -11,7 +11,7 @@ export class CurrentlyPlayingStack extends cdk.Stack {
     const fn = new lambda.Function(this, 'CurrentlyPlayingFunction', {
       description: 'Lambda function to get currently playing information from Spotify API',
       runtime: lambda.Runtime.NODEJS_22_X,
-      handler: 'index.handler',
+      handler: 'handler.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler')),
     });
 
@@ -27,6 +27,14 @@ export class CurrentlyPlayingStack extends cdk.Stack {
       // }
     });
     const currentlyPlaying = api.root.addResource('currently-playing');
+    currentlyPlaying.addCorsPreflight({
+      allowOrigins: [
+        'http://localhost:4321',
+        'https://lukemcdowell.github.io'
+      ],
+      allowMethods: [ 'GET', 'OPTIONS' ],
+      allowHeaders: [ 'x-api-key' ],
+    });
     const getIntegration = new apigw.LambdaIntegration(fn);
     currentlyPlaying.addMethod('GET', getIntegration, {
       apiKeyRequired: true,

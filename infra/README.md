@@ -1,8 +1,10 @@
-# Last Played Lambda and API
+# Currently Playing Lambda and API
 
-CDK Stack to create a Lambda function and API Gateway to return the last played song from Spotify.
+CDK Stack to create a Lambda function and API Gateway to return the currently playing or last played song from Spotify.
 
 The endpoint is secured using an API key. There is a rate limit of 10 requests per minute.
+
+The Lambda function uses the Spotify Web API to fetch the currently playing song. Spotify refresh token provided as an environment variable.
 
 ## Useful commands
 
