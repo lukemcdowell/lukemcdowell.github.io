@@ -1,30 +1,53 @@
 import * as cdk from 'aws-cdk-lib';
 import { Template, Match } from 'aws-cdk-lib/assertions';
-import { InfraStack } from '../lib/infra-stack';
+import { CurrentlyPlayingStack } from '../lib/currently-playing-stack';
 
-describe('InfraStack', () => {
-    test('creates a Lambda function and an API Gateway', () => {
+describe('CurrentlyPlayingStack', () => {
+    let template: Template;
+
+    beforeAll(() => {
         const app = new cdk.App();
-        const stack = new InfraStack(app, 'TestStack');
+        const stack = new CurrentlyPlayingStack(app, 'TestStack');
+        template = Template.fromStack(stack);
+    });
 
-        const template = Template.fromStack(stack);
-
-        // Check Lambda function exists
+    test('Lambda function is created', () => {
         template.hasResourceProperties('AWS::Lambda::Function', {
             Handler: 'index.handler',
             Runtime: Match.anyValue(),
+            Description: 'Lambda function to get currently playing information from Spotify API',
         });
+    });
 
-        // Check API Gateway exists
+    test('API Gateway REST API is created', () => {
         template.hasResourceProperties('AWS::ApiGateway::RestApi', {
-            Name: 'HelloApi',
+            Name: 'CurrentlyPlayingApi',
         });
+    });
 
-        // Check an ANY method exists and uses AWS_PROXY integration
+    test('GET /currently-playing method exists and requires API key', () => {
         template.hasResourceProperties('AWS::ApiGateway::Method', {
-            HttpMethod: 'ANY',
+            HttpMethod: 'GET',
+            ApiKeyRequired: true,
             Integration: {
                 Type: 'AWS_PROXY',
+            },
+        });
+    });
+
+    test('API Key is created', () => {
+        template.resourceCountIs('AWS::ApiGateway::ApiKey', 1);
+    });
+
+    test('Usage Plan is created with throttle and quota', () => {
+        template.hasResourceProperties('AWS::ApiGateway::UsagePlan', {
+            Throttle: {
+                RateLimit: 10,
+                BurstLimit: 2,
+            },
+            Quota: {
+                Limit: 1000,
+                Period: 'MONTH',
             },
         });
     });

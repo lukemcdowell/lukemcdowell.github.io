@@ -1,8 +1,8 @@
-# Welcome to your CDK TypeScript project
+# Last Played Lambda and API
 
-This is a blank project for CDK development with TypeScript.
+CDK Stack to create a Lambda function and API Gateway to return the last played song from Spotify.
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+The endpoint is secured using an API key. There is a rate limit of 10 requests per minute.
 
 ## Useful commands
 
@@ -12,6 +12,7 @@ The `cdk.json` file tells the CDK Toolkit how to execute your app.
 * `npx cdk deploy` * deploy this stack to your default AWS account/region
 * `npx cdk diff`    compare deployed stack with current state
 * `npx cdk synth`   emits the synthesized CloudFormation template
+* `npx cdk destroy` destroy this stack from your default AWS account/region
 
 ## Creating a Lambda function and API Gateway and Deploying
 
