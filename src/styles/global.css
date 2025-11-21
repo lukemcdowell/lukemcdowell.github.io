@@ -8,6 +8,10 @@ body {
     @apply backdrop-filter backdrop-sepia
 }
 
+a {
+    @apply underline hover:decoration-lime-700 hover:text-lime-700 transition-colors;
+}
+
 .fade-canvas {
     opacity: 0;
     transition: opacity 3s ease;
