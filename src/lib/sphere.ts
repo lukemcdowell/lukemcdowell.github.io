@@ -47,7 +47,7 @@ export function createSphereScene(canvas: HTMLElement) {
 
   const sphereGeometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
   const wireMaterial = new THREE.MeshBasicMaterial({
-    color: 0x000000,
+    color: 0x495565,
     wireframe: true,
   });
   const sphereWireframe = new THREE.Mesh(sphereGeometry, wireMaterial);
