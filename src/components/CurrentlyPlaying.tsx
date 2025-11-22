@@ -16,9 +16,6 @@ export default function CurrentlyPlaying() {
     const API_URL = import.meta.env.PUBLIC_API_URL;
     const API_KEY = import.meta.env.PUBLIC_API_KEY;
 
-    console.log("PUBLIC_API_URL:", import.meta.env.PUBLIC_API_URL);
-    console.log("PUBLIC_API_KEY:", import.meta.env.PUBLIC_API_KEY);
-
     useEffect(() => {
         fetchNowPlaying()
 
@@ -52,7 +49,7 @@ export default function CurrentlyPlaying() {
             setError(null);
 
             if (data && data.type !== "track") {
-                console.info(`Not showing non-track type: ${data.type}`);
+                console.info(`Not showing type: ${data.type}`);
             }
         } catch (err) {
             setError('Could not load track');
@@ -75,7 +72,11 @@ export default function CurrentlyPlaying() {
         return null;
     }
 
-    if (track && track.type === "track") {
+    if (!track) {
+        return null;
+    }
+
+    if (track.type === "track") {
         return (
             <p className="text-center">
                 {(track.isPlaying) ? 'Currently listening to: ' : 'Last listened to: '}
@@ -84,10 +85,13 @@ export default function CurrentlyPlaying() {
                     href={track.href}
                     className="inline-block"
                 >
-
                     {track?.song} by {track?.artist}
                 </a>
             </p>
+        );
+    } else {
+        return (
+            <p className="text-center">Not currently listening to anything.</p>
         );
     }
 }

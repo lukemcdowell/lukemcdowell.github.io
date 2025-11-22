@@ -91,6 +91,8 @@ function getCurrentlyPlaying(accessToken) {
                         artist: track.item.artists?.map(a => a.name).join(', '),
                         href: track.item.external_urls?.spotify,
                     });
+                } else if (res.statusCode === 204) {
+                    resolve({ isPlaying: false, type: 'silence' });
                 } else {
                     reject(new Error(`Spotify API error: ${res.statusCode}`));
                 }

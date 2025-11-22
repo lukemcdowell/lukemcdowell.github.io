@@ -35,7 +35,9 @@ export class CurrentlyPlayingStack extends cdk.Stack {
       allowMethods: [ 'GET', 'OPTIONS' ],
       allowHeaders: [ 'x-api-key' ],
     });
-    const getIntegration = new apigw.LambdaIntegration(fn);
+    const getIntegration = new apigw.LambdaIntegration(fn, {
+      proxy: true
+    });
     currentlyPlaying.addMethod('GET', getIntegration, {
       apiKeyRequired: true,
     });
