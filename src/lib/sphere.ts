@@ -12,7 +12,6 @@ export function createSphereScene(canvas: HTMLElement) {
 
   // scene
   const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xffffed);
 
   // camera
   const aspectRatio = canvas.clientWidth / canvas.clientHeight;
@@ -20,7 +19,7 @@ export function createSphereScene(canvas: HTMLElement) {
   camera.position.z = 3;
 
   // renderer
-  const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, canvas });
   renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
   renderer.setPixelRatio(window.devicePixelRatio);
 
