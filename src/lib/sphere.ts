@@ -23,11 +23,6 @@ export function createSphereScene(canvas: HTMLElement) {
   renderer.setSize(canvas.clientWidth, canvas.clientHeight, false);
   renderer.setPixelRatio(window.devicePixelRatio);
 
-  // controls
-  const controls = new OrbitControls(camera, renderer.domElement);
-  controls.enableZoom = false;
-  controls.enablePan = false;
-
   // lights
   const hemi = new THREE.HemisphereLight(0xffffff, 0x888888, 0.6);
   scene.add(hemi);

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import {useState, useEffect, useCallback} from 'react';
 
 interface SpotifyTrack {
     isPlaying: boolean;
@@ -16,14 +16,7 @@ export default function CurrentlyPlaying() {
     const API_URL = import.meta.env.PUBLIC_API_URL;
     const API_KEY = import.meta.env.PUBLIC_API_KEY;
 
-    useEffect(() => {
-        fetchNowPlaying()
-
-        const interval = setInterval(fetchNowPlaying, 30000);
-        return () => clearInterval(interval);
-    }, []);
-
-    async function fetchNowPlaying() {
+    const fetchNowPlaying = useCallback(async () => {
         if (!API_URL || !API_KEY) {
             console.error('Missing API_URL or API_KEY environment variables');
             setError('Missing API configuration');
@@ -31,33 +24,29 @@ export default function CurrentlyPlaying() {
             return;
         }
 
-        console.info('Fetching currently playing track...');
         try {
             const response = await fetch(API_URL, {
-                headers: {
-                    'x-api-key': API_KEY
-                }
+                headers: { "x-api-key": API_KEY }
             });
 
-            if (!response.ok) {
-                throw new Error('Failed to fetch');
-            }
-
             const data = await response.json();
-
-            setTrack(data);
+            setTrack(data.type === "track" ? data : null);
             setError(null);
-
-            if (data && data.type !== "track") {
-                console.info(`Not showing type: ${data.type}`);
-            }
-        } catch (err) {
-            setError('Could not load track');
-            console.error('Error fetching now playing:', err);
+        } catch {
+            setError("Could not load track");
         } finally {
             setLoading(false);
         }
-    }
+    }, [API_URL, API_KEY]);
+
+    useEffect(() => {
+        fetchNowPlaying()
+
+        const interval = setInterval(fetchNowPlaying, 30000);
+        return () => clearInterval(interval);
+    }, [fetchNowPlaying]);
+
+    if (error || !track) return null;
 
     if (loading) {
         return (
@@ -68,30 +57,18 @@ export default function CurrentlyPlaying() {
         );
     }
 
-    if (error) {
-        return null;
-    }
-
-    if (!track) {
-        return null;
-    }
-
-    if (track.type === "track") {
-        return (
+    return (
+        <>
             <p className="text-center">
-                {(track.isPlaying) ? 'Currently listening to: ' : 'Last listened to: '}
+                {track.isPlaying ? "Currently listening to: " : "Last listened to: "}
                 <a
                     target="_blank"
                     href={track.href}
-                    className="inline-block"
+                    className="inline-block underline"
                 >
-                    {track?.song} by {track?.artist}
+                    {track.song} by {track.artist}
                 </a>
             </p>
-        );
-    } else {
-        return (
-            <p className="text-center">Not currently listening to anything.</p>
-        );
-    }
+        </>
+    );
 }
