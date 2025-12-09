@@ -1,4 +1,8 @@
 const https = require('https');
+const { DynamoDBClient, PutItemCommand, GetItemCommand } = require("@aws-sdk/client-dynamodb");
+
+const dynamo = new DynamoDBClient();
+const TABLE = process.env.TABLE_NAME;
 
 exports.handler = async (event) => {
     try {
@@ -12,17 +16,17 @@ exports.handler = async (event) => {
         }
 
         const accessToken = await getAccessToken(CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN);
-
         const currentTrack = await getCurrentlyPlaying(accessToken);
 
-        return {
-            statusCode: 200,
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            body: JSON.stringify(currentTrack)
-        };
+        if (currentTrack) {
+            await saveLastTrack(currentTrack);
+            return success(currentTrack);
+        }
+
+        // nothing playing -> fetch cached track
+        const cached = await loadLastTrack();
+        return success(cached ?? { message: "No track cached yet" });
+
     } catch (error) {
         console.error('Error:', error);
         return {
@@ -31,6 +35,40 @@ exports.handler = async (event) => {
         };
     }
 };
+
+function success(body) {
+    return {
+        statusCode: 200,
+        headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*"
+        },
+        body: JSON.stringify(body)
+    };
+}
+
+async function saveLastTrack(track) {
+    await dynamo.send(new PutItemCommand({
+        TableName: TABLE,
+        Item: {
+            id: { S: "last" },
+            data: { S: JSON.stringify(track) }
+        }
+    }));
+}
+
+async function loadLastTrack() {
+    const res = await dynamo.send(new GetItemCommand({
+        TableName: TABLE,
+        Key: { id: { S: "last" } }
+    }));
+
+    if (!res.Item) return null;
+
+    const songData = JSON.parse(res.Item.data.S);
+    songData.isPlaying = false;
+    return songData
+}
 
 function getAccessToken(clientId, clientSecret, refreshToken){
     return new Promise((resolve, reject) => {
@@ -92,7 +130,7 @@ function getCurrentlyPlaying(accessToken) {
                         href: track.item.external_urls?.spotify,
                     });
                 } else if (res.statusCode === 204) {
-                    resolve({ isPlaying: false, type: 'silence' });
+                    resolve(null);
                 } else {
                     reject(new Error(`Spotify API error: ${res.statusCode}`));
                 }

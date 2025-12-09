@@ -1,6 +1,7 @@
 import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as apigw from "aws-cdk-lib/aws-apigateway";
+import * as dynamodb from 'aws-cdk-lib/aws-dynamodb';
 import * as lambda from "aws-cdk-lib/aws-lambda";
 import * as path from 'node:path';
 
@@ -8,12 +9,27 @@ export class CurrentlyPlayingStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps){
     super(scope, id, props)
 
+    const table = new dynamodb.Table(this, 'LastPlayedTrackTable', {
+      tableName: 'LastPlayedTrack',
+      partitionKey: { name: 'id', type: dynamodb.AttributeType.STRING },
+      billingMode: dynamodb.BillingMode.PAY_PER_REQUEST,
+    });
+
     const fn = new lambda.Function(this, 'CurrentlyPlayingFunction', {
+      functionName: 'CurrentlyPlayingFunction',
       description: 'Lambda function to get currently playing information from Spotify API',
       runtime: lambda.Runtime.NODEJS_22_X,
       handler: 'handler.handler',
       code: lambda.Code.fromAsset(path.join(__dirname, 'lambda-handler')),
+      environment: {
+        TABLE_NAME: table.tableName,
+        CLIENT_ID: process.env.CLIENT_ID!,
+        CLIENT_SECRET: process.env.CLIENT_SECRET!,
+        REFRESH_TOKEN: process.env.REFRESH_TOKEN!
+      }
     });
+
+    table.grantReadWriteData(fn);
 
     const api = new apigw.RestApi(this, 'CurrentlyPlayingApi', {
       restApiName: 'CurrentlyPlayingApi',
