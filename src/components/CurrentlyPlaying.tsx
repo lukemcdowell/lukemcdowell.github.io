@@ -1,4 +1,5 @@
 import {useState, useEffect, useCallback} from 'react';
+import mockResponse from '../mock/mock_response.json';
 
 interface SpotifyTrack {
     isPlaying: boolean;
@@ -19,7 +20,7 @@ export default function CurrentlyPlaying() {
     const fetchNowPlaying = useCallback(async () => {
         if (!API_URL || !API_KEY) {
             console.error('Missing API_URL or API_KEY environment variables');
-            setError('Missing API configuration');
+            setTrack(mockResponse);
             setLoading(false);
             return;
         }
@@ -66,9 +67,10 @@ export default function CurrentlyPlaying() {
                     href={track.href}
                     className="inline-block underline"
                 >
-                    {track.song} by {track.artist}
+                    {track.song} - {track.artist}
                 </a>
             </p>
         </>
     );
+
 }

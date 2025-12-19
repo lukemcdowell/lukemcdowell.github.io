@@ -9,7 +9,7 @@ body {
 }
 
 a {
-    @apply underline hover:decoration-lime-700 hover:text-lime-700 transition-colors;
+    @apply text-lime-800 underline hover:decoration-lime-700 hover:text-lime-700 transition-colors;
 }
 
 .fade-canvas {
