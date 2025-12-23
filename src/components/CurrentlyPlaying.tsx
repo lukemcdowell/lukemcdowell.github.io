@@ -60,12 +60,12 @@ export default function CurrentlyPlaying() {
 
     return (
         <>
-            <p className="text-center">
+            <p className="text-center site-text">
                 {track.isPlaying ? "Currently listening to: " : "Last listened to: "}
                 <a
                     target="_blank"
                     href={track.href}
-                    className="inline-block underline"
+                    className="inline-block highlight-text"
                 >
                     {track.song} - {track.artist}
                 </a>

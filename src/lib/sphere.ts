@@ -1,7 +1,9 @@
 import * as THREE from 'three';
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 
 export function createSphereScene(canvas: HTMLElement) {
+  const innerSphereColour = 0xffffff;
+  const outerSphereColour = 0x247BA0;
+
   // inner solid sphere
   const innerRadius = 0.6
 
@@ -24,7 +26,7 @@ export function createSphereScene(canvas: HTMLElement) {
   renderer.setPixelRatio(window.devicePixelRatio);
 
   // lights
-  const hemi = new THREE.HemisphereLight(0xffffff, 0x888888, 0.6);
+  const hemi = new THREE.HemisphereLight(0xffffff, 0x888888, 0.9);
   scene.add(hemi);
   const dir = new THREE.DirectionalLight(0xffffff, 0.7);
   dir.position.set(5, 10, 7);
@@ -32,16 +34,16 @@ export function createSphereScene(canvas: HTMLElement) {
 
   const innerSphereGeometry = new THREE.SphereGeometry(innerRadius, 32, 16);
   const innerMaterial = new THREE.MeshStandardMaterial({
-    color: 0xbef264,
-    roughness: 0.5,
-    // metalness: 0.2,
+    color: innerSphereColour,
+    // roughness: 0.5,
+    metalness: 0.2,
   });
   const innerSphere = new THREE.Mesh(innerSphereGeometry, innerMaterial);
   scene.add(innerSphere);
 
   const sphereGeometry = new THREE.SphereGeometry(radius, widthSegments, heightSegments);
   const wireMaterial = new THREE.MeshBasicMaterial({
-    color: 0x495565,
+    color: outerSphereColour,
     wireframe: true,
   });
   const sphereWireframe = new THREE.Mesh(sphereGeometry, wireMaterial);
