@@ -6,6 +6,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: #00171F;
+    font-family: 'Roboto Mono Variable', monospace;
 }
 
 .site-text {

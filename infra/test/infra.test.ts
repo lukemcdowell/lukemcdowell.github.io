@@ -13,7 +13,7 @@ describe('CurrentlyPlayingStack', () => {
 
     test('Lambda function is created', () => {
         template.hasResourceProperties('AWS::Lambda::Function', {
-            Handler: 'index.handler',
+            Handler: 'handler.handler',
             Runtime: Match.anyValue(),
             Description: 'Lambda function to get currently playing information from Spotify API',
         });
