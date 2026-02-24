@@ -1,0 +1,137 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+---
+
+<PageLayout title="about">
+  <h1 class="text-2xl font-bold mb-2">Luke McDowell</h1>
+
+  <div class="mb-2">
+    <p class="text-sm leading-relaxed">
+        I'm a software engineer who is eager to learn, grow, and contribute to impactful projects. I have 
+        full-stack industry experience building scalable, production-grade systems using modern technologies. 
+        Feel free to reach out using one of the methods below if you want to work together.
+    </p>
+  </div>
+
+  <div class="flex gap-4 text-sm highlight-text mb-10">
+    <a href="mailto:luke.db.mcdowell@gmail.com">Email</a>
+    <a href="https://www.linkedin.com/in/ldbm/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/lukemcdowell/" target="_blank">GitHub</a>
+  </div>
+
+  <!-- Experience -->
+  <section class="mb-10">
+    <h2 class="highlight-text text-sm font-bold uppercase tracking-widest mb-5">Experience</h2>
+
+    <div class="mb-7">
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+        <span class="font-bold">Zenobē</span>
+        <span class="text-sm text-gray-500">Apr 2025 - Present</span>
+      </div>
+      <p class="text-sm text-gray-500 mb-2">London (Remote)</p>
+      <p class="text-sm leading-relaxed">
+        Full stack engineer in the charging management team, delivering scalable software solutions for
+        electric vehicle fleet clients. I design and build modern web applications and APIs using Angular
+        and Spring Boot, deployed on AWS with strong DevOps practices to ensure reliability and
+        performance. My work directly supports the transition to clean transport by enabling smarter, more
+        efficient EV fleet operations.
+      </p>
+    </div>
+
+    <div class="mb-7">
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+        <span class="font-bold">JPMorgan Chase & Co</span>
+        <span class="text-sm text-gray-500">Sep 2023 - Apr 2025</span>
+      </div>
+      <p class="text-sm text-gray-500 mb-2">Glasgow</p>
+      <p class="text-sm leading-relaxed">
+        Worked as a full stack engineer building micro-frontend applications with React and Java Spring Boot.
+        Developed robust user interfaces and backend microservices, leveraging AWS, Docker, Git, and CI/CD
+        pipelines within an agile environment. Contributed to scalable, production-grade systems in a highly
+        regulated financial setting.
+      </p>
+    </div>
+
+    <div class="mb-7">
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+        <span class="font-bold">PwC</span>
+        <span class="text-sm text-gray-500">Sep 2019 - Jul 2023</span>
+      </div>
+      <p class="text-sm text-gray-500 mb-2">Leeds</p>
+      <p class="text-sm leading-relaxed">
+        Selected for PwC's competitive Technology Degree Apprenticeship (TDA) programme, combining academic
+        study with hands-on industry delivery. Built data visualisation and analytics solutions for private
+        equity clients using SQL and Power BI, driving adoption through stakeholder engagement and live demos.
+        Developed automation tools and internal applications using Python, Alteryx, and Power Apps to improve
+        efficiency and decision-making.
+      </p>
+    </div>
+  </section>
+
+  <!-- Education -->
+  <section class="mb-10">
+    <h2 class="highlight-text text-sm font-bold uppercase tracking-widest mb-5">Education</h2>
+
+    <div>
+      <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
+        <span class="font-bold">University of Leeds</span>
+        <span class="text-sm text-gray-500">Sep 2019 - Jul 2023</span>
+      </div>
+      <p class="text-sm">BSc Computer Science (Digital & Technology Solutions) - First Class Honours</p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section class="mb-10">
+    <h2 class="highlight-text text-sm font-bold uppercase tracking-widest mb-5">Skills</h2>
+
+    <div class="flex flex-col gap-3">
+      {[
+        { label: "Languages",  items: ["TypeScript", "JavaScript", "Java", "Python", "SQL"] },
+        { label: "Frameworks", items: ["React", "Angular", "Spring Boot", "NestJS", "Next.js", "Node.js", "Tailwind CSS"] },
+        { label: "Tools",      items: ["AWS", "Docker", "Kubernetes", "Terraform", "Kafka", "Git", "Jenkins", "Spinnaker", "ArgoCD"] },
+      ].map(({ label, items }) => (
+        <div class="flex flex-col sm:flex-row sm:gap-4">
+          <span class="text-xs font-bold uppercase tracking-wider w-24 shrink-0 mb-1.5 sm:mb-0 sm:mt-0.5">{label}</span>
+          <div class="flex flex-wrap gap-1.5">
+            {items.map(item => (
+              <span class="text-xs px-2 py-0.5 border border-zinc-700">{item}</span>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Languages -->
+  <section class="mb-10">
+    <h2 class="highlight-text text-sm font-bold uppercase tracking-widest mb-5">Languages</h2>
+    <div class="flex flex-wrap gap-1.5">
+      {[["English", "Fluent"], ["Spanish", "Intermediate"]].map(([lang, level]) => (
+        <span class="text-xs px-2 py-0.5 border border-zinc-700">
+          {lang} <span class="font-bold">· {level}</span>
+        </span>
+      ))}
+    </div>
+  </section>
+
+  <!-- Awards & Certifications -->
+  <section class="mb-10">
+    <h2 class="highlight-text text-sm font-bold uppercase tracking-widest mb-5">Awards & Certifications</h2>
+    <div class="flex flex-wrap gap-1.5">
+      {["AWS Certified Developer – Associate", "Azure Fundamentals", "Gold Duke of Edinburgh's Award"].map(item => (
+        <span class="text-xs px-2 py-0.5 border border-zinc-700">{item}</span>
+      ))}
+    </div>
+  </section>
+
+  <!-- Interests -->
+  <section class="mb-10">
+    <h2 class="highlight-text text-sm font-bold uppercase tracking-widest mb-5">Interests</h2>
+    <div class="flex flex-wrap gap-1.5">
+      {["Cycling", "Running", "Chess", "Reading", "Football", "Vinyl records", "Piano", "Hiking", "Boxing", "Martial arts"].map(item => (
+        <span class="text-xs px-2 py-0.5 border border-zinc-700">{item}</span>
+      ))}
+    </div>
+  </section>
+</PageLayout>

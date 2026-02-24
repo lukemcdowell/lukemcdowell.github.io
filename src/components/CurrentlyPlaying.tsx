@@ -19,7 +19,7 @@ export default function CurrentlyPlaying() {
 
   const fetchNowPlaying = useCallback(async () => {
     if (!API_URL || !API_KEY) {
-      console.error("Missing API_URL or API_KEY environment variables");
+      console.error("missing API_URL or API_KEY environment variables");
       setTrack(mockResponse);
       setLoading(false);
       return;
@@ -34,7 +34,7 @@ export default function CurrentlyPlaying() {
       setTrack(data.type === "track" ? data : null);
       setError(null);
     } catch {
-      setError("Could not load track");
+      setError("could not load track");
     } finally {
       setLoading(false);
     }
@@ -51,7 +51,7 @@ export default function CurrentlyPlaying() {
     return (
       <div className="flex items-center gap-2 justify-center site-text">
         <div className="animate-spin h-4 w-4 border-2 highlight-text border-t-transparent rounded-full"></div>
-        <span>Getting currently playing...</span>
+        <span>getting currently playing...</span>
       </div>
     );
   }
@@ -61,7 +61,7 @@ export default function CurrentlyPlaying() {
   return (
     <>
       <p className="text-center site-text">
-        {track.isPlaying ? "Currently listening to: " : "Last listened to: "}
+        {track.isPlaying ? "currently listening to: " : "last listened to: "}
         <a
           target="_blank"
           href={track.href}

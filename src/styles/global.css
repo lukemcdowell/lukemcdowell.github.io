@@ -1,6 +1,11 @@
 @import "tailwindcss";
 
-html,
+html {
+    scrollbar-gutter: stable;
+    background-color: #00171F;
+    font-family: 'Roboto Mono Variable', monospace;
+}
+
 body {
     margin: 0;
     width: 100%;

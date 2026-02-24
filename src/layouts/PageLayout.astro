@@ -1,0 +1,25 @@
+---
+import Layout from './Layout.astro';
+import '../styles/global.css';
+import SvgSphere from "../../public/favicon.svg";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<Layout>
+  <div class="site-text">
+    <nav class="text-sm mb-10 flex gap-3 items-center">
+      <a href="/" class="flex"><SvgSphere class="h-10 w-10" /></a>
+      <div>
+        <a href="/" class="highlight-text">home</a>
+        <span> / {title}</span>
+      </div>
+      
+    </nav>
+    <slot />
+  </div>
+</Layout>
