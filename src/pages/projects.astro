@@ -1,0 +1,44 @@
+---
+import PageLayout from "../layouts/PageLayout.astro";
+
+const projects = [
+  {
+    title: "Musaic",
+    description:
+      "Web app to create a mosaic of your favourite albums. Users can add their favourite album covers to a grid, rearrange them, and export their grid as an image. Integrates with the Spotify API to get album covers.",
+    href: "https://musaic-grid.vercel.app/",
+    source: "https://github.com/lukemcdowell/musaic",
+    image: "/images/musaic.png",
+  },
+  {
+    title: "Minimal Chess",
+    description:
+      "Chrome extension to hide short-format games and distractions on Chess.com and Lichess.",
+    href: "https://chromewebstore.google.com/detail/minimal-chess/jogeehcjecblahccnemfebciigamdhmd",
+  },
+];
+---
+
+<PageLayout title="projects">
+  <section>
+    <div class="flex flex-col gap-6">
+      {
+        projects.map(({ title, description, href, source, image }) => (
+          <div class="border border-zinc-700">
+            {image && (
+              <img src={image} alt={title} class="w-full object-cover" />
+            )}
+            <div class="p-4">
+              <p class="font-bold mb-2">{title}</p>
+              <p class="text-sm leading-relaxed mb-4">{description}</p>
+              <div class="flex justify-between text-xs highlight-text">
+                <a href={href} target="_blank">↗ view</a>
+                {source && <a href={source} target="_blank">⟨/⟩ source</a>}
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</PageLayout>
