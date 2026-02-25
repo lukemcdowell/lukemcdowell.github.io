@@ -7,21 +7,18 @@ import SvgSphere from '../../public/favicon.svg';
 
 const links = [
   { href: '/projects', label: 'projects' },
-  // { href: '/blog',     label: 'blog' },
+  { href: '/blog',     label: 'blog' },
   { href: '/about',    label: 'about' },
 ];
 ---
 
 <Layout bodyClass="overflow-hidden">
   <div class="site-text relative z-10">
-    <nav class="flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <SvgSphere class="h-10 w-10" />
-        <span class="font-bold">Luke McDowell</span>
-      </div>
-      <div class="flex gap-5 text-sm highlight-text">
+    <nav class="flex w-full items-center gap-3 justify-between">
+      <SvgSphere class="h-10 w-10 shrink-0" />
+      <div class="flex gap-x-5 text-sm highlight-text">
         {links.map(({ href, label }) => (
-          <a href={href}>{label}</a>
+          <a href={href} class="py-1">{label}</a>
         ))}
       </div>
     </nav>

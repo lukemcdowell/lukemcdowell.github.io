@@ -1,0 +1,37 @@
+---
+import Layout from './Layout.astro';
+import '../styles/global.css';
+import SvgSphere from '../../public/favicon.svg';
+
+interface Props {
+  title: string;
+  date: string;
+}
+
+const { title, date } = Astro.props;
+---
+
+<Layout>
+  <div class="site-text">
+    <nav class="text-sm mb-10 flex gap-3 items-center">
+      <a href="/" class="flex"><SvgSphere class="h-10 w-10" /></a>
+      <div>
+        <a href="/" class="highlight-text">home</a>
+        <span> / </span>
+        <a href="/blog" class="highlight-text">blog</a>
+        <span> / {title}</span>
+      </div>
+    </nav>
+
+    <article>
+      <header class="mb-8">
+        <h1 class="text-2xl font-bold mb-2">{title}</h1>
+        <p class="text-sm text-gray-500">{date}</p>
+      </header>
+
+      <div class="text-sm leading-relaxed flex flex-col gap-4">
+        <slot />
+      </div>
+    </article>
+  </div>
+</Layout>

@@ -1,0 +1,28 @@
+---
+import PageLayout from '../../layouts/PageLayout.astro';
+
+const posts = [
+  {
+    slug: 'hello-world',
+    title: 'hello world',
+    date: 'Feb 25, 2026',
+    excerpt: 'an introduction to this site.',
+  },
+];
+---
+
+<PageLayout title="blog">
+  <section>
+    <div class="flex flex-col gap-4">
+      {posts.map(({ slug, title, date, excerpt }) => (
+        <a href={`/blog/${slug}`} class="group border border-zinc-700 p-4 block hover:border-[#247BA0] hover:no-underline!">
+          <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
+            <span class="font-bold highlight-text group-hover:underline">{title}</span>
+            <span class="text-sm text-gray-500">{date}</span>
+          </div>
+          <p class="text-sm leading-relaxed">{excerpt}</p>
+        </a>
+      ))}
+    </div>
+  </section>
+</PageLayout>

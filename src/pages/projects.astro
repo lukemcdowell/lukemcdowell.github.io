@@ -23,20 +23,16 @@ const projects = [
   <section>
     <div class="flex flex-col gap-6">
       {
-        projects.map(({ title, description, href, source, image }) => (
-          <div class="border border-zinc-700">
+        projects.map(({ title, description, href, image }) => (
+          <a href={href} target="_blank" class="group border border-zinc-700 hover:border-[#247BA0] hover:no-underline! block">
             {image && (
               <img src={image} alt={title} class="w-full object-cover" />
             )}
             <div class="p-4">
-              <p class="font-bold mb-2">{title}</p>
-              <p class="text-sm leading-relaxed mb-4">{description}</p>
-              <div class="flex justify-between text-xs highlight-text">
-                <a href={href} target="_blank">↗ view</a>
-                {source && <a href={source} target="_blank">⟨/⟩ source</a>}
-              </div>
+              <p class="font-bold mb-2 highlight-text group-hover:underline">{title}</p>
+              <p class="text-sm leading-relaxed">{description}</p>
             </div>
-          </div>
+          </a>
         ))
       }
     </div>
