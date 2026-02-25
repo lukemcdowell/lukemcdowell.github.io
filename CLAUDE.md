@@ -24,8 +24,9 @@ npx cdk diff      # Preview changes
 This is a personal portfolio site built with Astro. The frontend is a static site deployed to GitHub Pages; the backend is an AWS Lambda + API Gateway stack (in `infra/`) that proxies the Spotify API to return the currently playing track.
 
 **Frontend (`src/`):**
-- `pages/` — file-based routing; `index.astro` is the homepage
+- `pages/` — file-based routing; `index.astro` is the homepage, `about.astro` and `projects.astro` are sub-pages
 - `layouts/Layout.astro` — base HTML shell shared across pages
+- `layouts/PageLayout.astro` — breadcrumb layout (`home / title`) used by all sub-pages; wraps `Layout.astro`
 - `components/Sphere.astro` — canvas wrapper that loads `lib/sphere.ts`
 - `components/CurrentlyPlaying.tsx` — React component that polls the API every 30s; falls back to `mock/mock_response.json` when `PUBLIC_API_URL`/`PUBLIC_API_KEY` env vars are absent
 - `lib/sphere.ts` — Three.js scene (dual sphere: inner solid + outer wireframe, continuous rotation)
@@ -42,7 +43,8 @@ This is a personal portfolio site built with Astro. The frontend is a static sit
 
 ## Style
 
-- Color palette is defined as CSS variables in `src/styles/global.css`: background `#00171F`, text `#BFBFBF`, highlight `#247BA0`
+- Color palette: background `#00171F`, body text `#BFBFBF`, highlight/links `#247BA0` (`highlight-text` class), borders `border-zinc-700`, secondary text `text-gray-500`
 - Font: Roboto Mono Variable throughout
 - Tailwind CSS v4 (via `@tailwindcss/vite`); use the `sm:` breakpoint for mobile layouts
 - React is used only where interactivity is needed (`client:load` directive); prefer `.astro` components otherwise
+- Timeline pattern (used in `about.astro` experience section): flex row with a left column (`flex-col items-center`) containing a circle dot and `flex-1 w-px bg-zinc-700` line, and a right `flex-1` content column

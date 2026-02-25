@@ -1,5 +1,6 @@
 ---
 import '@fontsource-variable/roboto-mono';
+const { bodyClass = '' } = Astro.props;
 ---
 
 <!doctype html>
@@ -17,7 +18,7 @@ import '@fontsource-variable/roboto-mono';
 		<meta name="apple-mobile-web-app-title" content="LM" />
 		<link rel="manifest" href="/site.webmanifest" />
 	</head>
-	<body>
+	<body class={bodyClass}>
 		<main class="max-w-xl mx-auto p-6 text-gray-600">
 			<slot />
 		</main>
