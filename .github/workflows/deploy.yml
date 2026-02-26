@@ -15,7 +15,26 @@ permissions:
   id-token: write
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run CurrentlyPlaying component tests
+        run: npm test
+
   build:
+    needs: test
     runs-on: ubuntu-latest
     environment: github-pages
     steps:

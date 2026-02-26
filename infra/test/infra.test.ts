@@ -51,4 +51,61 @@ describe('CurrentlyPlayingStack', () => {
             },
         });
     });
+
+    test('DynamoDB table has correct name, key schema, and billing mode', () => {
+        template.hasResourceProperties('AWS::DynamoDB::Table', {
+            TableName: 'LastPlayedTrack',
+            KeySchema: [{ AttributeName: 'id', KeyType: 'HASH' }],
+            BillingMode: 'PAY_PER_REQUEST',
+        });
+    });
+
+    test('Lambda function has correct runtime and name', () => {
+        template.hasResourceProperties('AWS::Lambda::Function', {
+            Runtime: 'nodejs22.x',
+            FunctionName: 'CurrentlyPlayingFunction',
+        });
+    });
+
+    test('Lambda function has TABLE_NAME environment variable', () => {
+        template.hasResourceProperties('AWS::Lambda::Function', {
+            Environment: {
+                Variables: Match.objectLike({
+                    TABLE_NAME: Match.anyValue(),
+                }),
+            },
+        });
+    });
+
+    test('Lambda has DynamoDB GetItem and PutItem IAM permissions', () => {
+        template.hasResourceProperties('AWS::IAM::Policy', {
+            PolicyDocument: {
+                Statement: Match.arrayWith([
+                    Match.objectLike({
+                        Effect: 'Allow',
+                        Action: Match.arrayWith([
+                            'dynamodb:GetItem',
+                            'dynamodb:PutItem',
+                        ]),
+                    }),
+                ]),
+            },
+        });
+    });
+
+    test('CORS OPTIONS method exists on /currently-playing with MOCK integration', () => {
+        template.hasResourceProperties('AWS::ApiGateway::Method', {
+            HttpMethod: 'OPTIONS',
+            ApiKeyRequired: false,
+            Integration: {
+                Type: 'MOCK',
+            },
+        });
+    });
+
+    test('Usage Plan is linked to API key via UsagePlanKey', () => {
+        template.hasResourceProperties('AWS::ApiGateway::UsagePlanKey', {
+            KeyType: 'API_KEY',
+        });
+    });
 });
