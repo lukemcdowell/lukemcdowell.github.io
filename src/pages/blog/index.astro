@@ -8,13 +8,19 @@ const posts = [
     date: 'Feb 25, 2026',
     excerpt: 'an introduction to this site.',
   },
+  {
+    slug: 'topsify',
+    title: 'topSify',
+    date: 'May 26, 2026',
+    excerpt: 'displaying my top tracks and artists from Spotify.',
+  },
 ];
 ---
 
 <PageLayout title="blog">
   <section>
     <div class="flex flex-col gap-4">
-      {posts.map(({ slug, title, date, excerpt }) => (
+      {posts.reverse().map(({ slug, title, date, excerpt }) => (
         <a href={`/blog/${slug}`} class="group border border-zinc-700 p-4 block hover:border-[#247BA0] hover:no-underline!">
           <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-2">
             <span class="font-bold highlight-text group-hover:underline">{title}</span>

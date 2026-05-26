@@ -1,0 +1,33 @@
+---
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
+---
+
+<BlogPostLayout title="topSify" date="May 26, 2026">
+  <p>
+    If you couldn't already tell from my personal projects, I love music. I am also a long term Spotify user, and I look forward every year to viewing my Spotify Wrapped.
+  </p>
+
+  <p>
+    A few years ago Wrapped was the only way to see your top tracks. Around 2020 I found a basic site from a Reddit thread (just an IP address), that wrapped the Spotify API and showed your top tracks across short, medium and long term windows. I used it a lot, but eventually got sick of seeing my tracks in <code>&lt;li&gt;</code> elements and wanted something more visually appealing.
+  </p>
+
+  <p>
+    I started building my own version in 2021, still at uni and very much an inexperienced dev. I was delighted when I finally got Spotify auth working in an ugly Flask app... and then, as with most of my side projects, I got bored and development stalled. At some point, that basic site became <a href="https://www.statsforspotify.com/" class="highlight-text" target="_blank">statsforspotify.com</a>, which was a huge upgrade, with nice touches like song movement since your last visit, though I still wanted something more visually appealing.
+  </p>
+
+  <p>
+    I rebuilt from scratch in November 2024 on a modern Next.js + Tailwind + shadcn stack. I ported my auth helpers into Next API handlers, implemented a full login-via-Spotify flow with token refresh, and added a feature to export top tracks (or tracks from top artists) into playlists.
+  </p>
+
+  <p>
+    Then I hit an auth bug and development stalled... for a whole year. I finally picked it back up in February 2026. Just as I was preparing to apply for an extended API quota, I found out Spotify had changed their terms — extended quotas now only go to registered businesses. I was annoyed, because I'd looked into it in early 2025 when the app was basically ready and could have shipped if I'd powered through and fixed the issues I was putting off.
+  </p>
+
+  <p>
+    Lesson learned: when a project is 90% done, wrap it up. I pivoted and removed all auth and playlist features, and now it is just a showcase of my personal top tracks, artists and genres.
+  </p>
+
+  <p>
+    You can view it at <a href="https://topsify.vercel.app/" class="highlight-text" target="_blank">topsify.vercel.app</a>.
+  </p>
+</BlogPostLayout>
