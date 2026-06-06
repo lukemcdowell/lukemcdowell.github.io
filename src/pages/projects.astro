@@ -1,5 +1,8 @@
 ---
 import PageLayout from "../layouts/PageLayout.astro";
+import { Image } from "astro:assets";
+import topsifyImg from "../assets/images/topsify.png";
+import musaicImg from "../assets/images/musaic.png";
 
 const projects = [
   {
@@ -8,7 +11,7 @@ const projects = [
       "Web app to display my top Spotify tracks, artists, & genres.",
     href: "https://topsify.vercel.app/",
     source: "https://github.com/lukemcdowell/topsify",
-    image: "/images/topsify.png",
+    image: topsifyImg,
   },
   {
     title: "Musaic",
@@ -16,7 +19,7 @@ const projects = [
       "Web app to create a mosaic of your favourite albums. Users can add their favourite album covers to a grid, rearrange them, and export their grid as an image. Integrates with the Spotify API to get album covers.",
     href: "https://musaic-grid.vercel.app/",
     source: "https://github.com/lukemcdowell/musaic",
-    image: "/images/musaic.png",
+    image: musaicImg,
   },
   {
     title: "Minimal Chess",
@@ -34,7 +37,7 @@ const projects = [
         projects.map(({ title, description, href, image }) => (
           <a href={href} target="_blank" class="group border border-zinc-700 rounded-lg overflow-hidden hover:border-[#247BA0] hover:no-underline! block">
             {image && (
-              <img src={image} alt={title} class="w-full object-cover" />
+              <Image src={image} alt={title} class="w-full object-cover" />
             )}
             <div class="p-4">
               <p class="font-bold mb-2 highlight-text group-hover:underline">{title}</p>
