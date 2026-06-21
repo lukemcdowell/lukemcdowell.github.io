@@ -3,12 +3,20 @@ import PageLayout from "../layouts/PageLayout.astro";
 import { Image } from "astro:assets";
 import topsifyImg from "../assets/images/topsify.png";
 import musaicImg from "../assets/images/musaic.png";
+import jamesFinlayImg from "../assets/images/jamesFinlayRunningCoaching.png";
 
 const projects = [
   {
+    title: "James Finlay Running Coaching",
+    description:
+      "Static site for a running coaching business, built with Astro and featuring a custom intro animation, scroll-driven UI, and a serverless contact form (Cloudflare Pages Functions + Turnstile + Resend).",
+    href: "https://jamesfinlayrunningcoaching.co.uk/",
+    image: jamesFinlayImg,
+  },
+  {
     title: "topSify",
     description:
-      "Web app to display my top Spotify tracks, artists, & genres.",
+      "Web app to display my top Spotify tracks, artists, & genres. Built with Next.js and the Spotify API.",
     href: "https://topsify.vercel.app/",
     source: "https://github.com/lukemcdowell/topsify",
     image: topsifyImg,
