@@ -15,7 +15,14 @@ exports.handler = async (event) => {
             process.exit(1);
         }
 
-        const accessToken = await getAccessToken(CLIENT_ID, CLIENT_SECRET, REFRESH_TOKEN);
+        const storedToken = await loadRefreshToken();
+        const tokenToUse = storedToken ?? REFRESH_TOKEN;
+
+        const { accessToken, refreshToken: rotatedToken } = await getAccessToken(CLIENT_ID, CLIENT_SECRET, tokenToUse);
+        if (rotatedToken && rotatedToken !== tokenToUse) {
+            await saveRefreshToken(rotatedToken);
+        }
+
         const currentTrack = await getCurrentlyPlaying(accessToken);
 
         if (currentTrack) {
@@ -70,6 +77,25 @@ async function loadLastTrack() {
     return songData
 }
 
+async function saveRefreshToken(token) {
+    await dynamo.send(new PutItemCommand({
+        TableName: TABLE,
+        Item: {
+            id: { S: "spotify_refresh_token" },
+            token: { S: token }
+        }
+    }));
+}
+
+async function loadRefreshToken() {
+    const res = await dynamo.send(new GetItemCommand({
+        TableName: TABLE,
+        Key: { id: { S: "spotify_refresh_token" } }
+    }));
+
+    return res.Item ? res.Item.token.S : null;
+}
+
 function getAccessToken(clientId, clientSecret, refreshToken){
     return new Promise((resolve, reject) => {
         const credentials = Buffer.from(`${clientId}:${clientSecret}`).toString('base64');
@@ -92,7 +118,7 @@ function getAccessToken(clientId, clientSecret, refreshToken){
             res.on('end', () => {
                 if (res.statusCode === 200) {
                     const response = JSON.parse(data);
-                    resolve(response.access_token);
+                    resolve({ accessToken: response.access_token, refreshToken: response.refresh_token });
                 } else {
                     reject(new Error(`Token request failed: ${data}`));
                 }
